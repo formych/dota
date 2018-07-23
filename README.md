@@ -4,11 +4,11 @@
 ### Resources
 If you need help getting started with Go itself, I recommend these resources:
 
-> 1.[Go](https://golang.org/)
-> 2.[The Go tour](https://tour.golang.org/)
-> 3.[How to write Go code](https://golang.org/doc/code.html)
-> 4.[Effective Go](https://golang.org/doc/effective_go.html)
->5.[The Go Programming Language](https://github.com/gopl-zh/gopl-zh.github.com)
+> 1. [Go](https://golang.org/)
+> 2. [The Go tour](https://tour.golang.org/)
+> 3. [How to write Go code](https://golang.org/doc/code.html)
+> 4. [Effective Go](https://golang.org/doc/effective_go.html)
+> 5. [The Go Programming Language](https://github.com/gopl-zh/gopl-zh.github.com)
 
 ### Getting Started
 ```
