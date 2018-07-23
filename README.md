@@ -28,6 +28,12 @@ dep ensure -v
 go run main.go -c release/config/qa.yaml
 ```
 
+## build
+
+```bash
+sh build.sh
+```
+
 ### 目录结构
 
 > + api                 对外接口
