@@ -1,0 +1,22 @@
+port: 8080
+log:
+  level: info #debug
+  line_level: info, warn, error, panic
+  async_count: 10000
+wait_timeout: 10 # 服务平滑关闭的时间
+pgsql:
+  host: 35.229.153.229
+  port: 5432
+  user: dota
+  password: howtofajiazhifu
+  database: dota
+  conn_timeout: 3000 # ms，默认30000
+  read_timeout: 3000 # ms，默认30000
+  write_timeout: 3000 # ms，默认30000
+redis:
+  host: 35.229.153.229
+  port: 6379
+  password: howtofajiazhifu
+  conn_timeout: 3000 # ms，默认30000
+  read_timeout: 3000 # ms，默认30000
+  write_timeout: 3000 # ms，默认30000

@@ -1,0 +1,9 @@
+.DS_Store
+vendor
+bin
+logs
+log
+*.log
+.*.swp
+*.exe
+*.exe~
