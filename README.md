@@ -1,7 +1,11 @@
-# dota竞猜
-#### Powered By YY @ 2013
-#### Repowered @ 2017
+# dota guess
+
+[![license](http://img.shields.io/badge/license-MIT-red.svg?style=flat)](https://raw.githubusercontent.com/formych/dota/master/LICENSE)
+
+#### Powered By YY @ 2013, Repowered @ 2017
+
 ### Resources
+
 If you need help getting started with Go itself, I recommend these resources:
 
 > 1. [Go](https://golang.org/)
@@ -11,7 +15,8 @@ If you need help getting started with Go itself, I recommend these resources:
 > 5. [The Go Programming Language](https://github.com/gopl-zh/gopl-zh.github.com)
 
 ### Getting Started
-```
+
+``` sh
 go get git@github.com:formych/dota.git
 
 cd $GOPATH/src/github.com/formych/dota
@@ -24,6 +29,7 @@ go run main.go -c release/config/qa.yaml
 ```
 
 ### 目录结构
+
 > + api                 对外接口
 > - dao                 dao 操作
 > * doc                 说明文档
