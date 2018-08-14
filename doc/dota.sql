@@ -77,7 +77,6 @@ CREATE TABLE IF NOT EXISTS `guess_record` (
   `id` BIGINT UNSIGNED NOT NULL COMMENT '表id, 数据连续性',
   `uuid` BINARY(16) NOT NULL COMMENT 'user唯一标识',
   `guid` BINARY(16) NOT NULL COMMENT 'guess唯一标识',
-  `type` TINYINT NOT NULL COMMENT '竞猜类型',
   `amount` BIGINT NOT NULL COMMENT '竞猜金额',
   `result` TINYINT NOT NULL COMMENT '预测结果',
   `earnings` BIGINT NOT NULL COMMENT '竞猜收益',

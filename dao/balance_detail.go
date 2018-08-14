@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"database/sql"
 	"fmt"
 	"time"
 
@@ -37,18 +38,24 @@ var BalanceDetailDAO = &balanceDetailDAO{db: "", table: "user_balance",
 	addColumns: "uuid, trade_id, trade_type, pay_type, source, amount, balance, gbalance, comment, ext_data, created_at, updated_at"}
 
 // Add 增加一条余额变动记录
-func (bdao *balanceDetailDAO) Add(b *BalanceDetail) (id int64, err error) {
+func (bdao *balanceDetailDAO) Add(b *BalanceDetail) (err error) {
 	exeSQL := fmt.Sprintf("INSERT INTO `%s` (%s) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)", bdao.table, bdao.addColumns)
-	res, err := config.DB.Exec(exeSQL, b.UID, b.TradeID, b.TradeType, b.PayType, b.Source, b.Amount, b.Balance, b.Gbalance, b.Comment, b.ExtraData, b.CreatedAt, b.UpdatedAt)
+	_, err = config.DB.Exec(exeSQL, b.UID, b.TradeID, b.TradeType, b.PayType, b.Source, b.Amount, b.Balance, b.Gbalance, b.Comment, b.ExtraData, b.CreatedAt, b.UpdatedAt)
 	if err != nil {
 		logrus.Errorf("dao: insert row failed, sql:[%s], row:[%+v], err:[%s]", exeSQL, *b, err.Error())
 		return
 	}
-	id, err = res.RowsAffected()
-	if err != nil {
-		logrus.Errorf("dao: get rows affectd failed, sql:[%s], row:[%+v], err:[%s]", exeSQL, *b, err.Error())
-	}
 	return
 }
 
-// func Get() (err error)
+func (bdao *balanceDetailDAO) GetAll(uid int64) (res []*BalanceDetail, err error) {
+	exeSQL := fmt.Sprintf("SELECT %s FROM WHERE uid = %d", bdao.table, uid)
+	err = config.DB.Get(&res, exeSQL)
+	if err == sql.ErrNoRows {
+		return nil, nil
+	}
+	if err != nil {
+		logrus.Errorf("dao: get rows failed, sql:[%s], err:[%s]", exeSQL, err.Error())
+	}
+	return
+}

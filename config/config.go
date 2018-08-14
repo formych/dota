@@ -133,6 +133,7 @@ func InitPgSQL(conn *ConnConf) (driverName, dsn string) {
 func InitRedis(conn *ConnConf) {
 	conf := &redis.Options{
 		Addr:         fmt.Sprintf("%s:%d", conn.Host, conn.Port),
+		Password:     conn.Password,
 		DialTimeout:  time.Duration(conn.ConnTimeout) * time.Millisecond,
 		ReadTimeout:  time.Duration(conn.ReadTimeout) * time.Millisecond,
 		WriteTimeout: time.Duration(conn.WriteTimeout) * time.Millisecond,
@@ -142,7 +143,6 @@ func InitRedis(conn *ConnConf) {
 
 // Close 后续优化
 func Close() {
-	fmt.Println(1111)
 	if err := DB.Close(); err != nil {
 		logrus.Errorf("clode db failed, err:[%s]", err.Error())
 	}

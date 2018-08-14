@@ -53,19 +53,22 @@ CREATE INDEX IF NOT EXISTS idx_user_balance_detail_created on user_balance_detai
 DROP TABLE IF EXISTS guess_info;
 CREATE TABLE IF NOT EXISTS guess_info (
   id serial8  NOT NULL,
-  gid BIGINT NOT NULL,
   uid BIGINT NOT NULL,
+  name VARCHAR(255) NOT NULL,
   settle_type_id BIGINT NOT NULL,
   guess_type_id BIGINT NOT NULL,
   chip_type_id BIGINT NOT NULL,
-  "desc" VARCHAR(1024) NOT NULL,
   fund_pool BIGINT NOT NULL,
+  result SMALLINT NOT NULL,
   status SMALLINT NOT NULL,
+  info JSON,
+  start_time TIMESTAMP NOT NULL,
+  end_time TIMESTAMP NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX IF NOT EXISTS uniq_guess_info_gid on guess_info(gid);
+CREATE INDEX IF NOT EXISTS uniq_guess_info_gid on guess_info(uid);
 CREATE INDEX IF NOT EXISTS idx_guess_info_created on guess_info(created_at);
 
 DROP TABLE IF EXISTS guess_record;
@@ -73,11 +76,12 @@ CREATE TABLE IF NOT EXISTS guess_record (
   id serial8  NOT NULL,
   uid BIGINT NOT NULL,
   gid BIGINT NOT NULL,
-  type SMALLINT NOT NULL,
+  guess_type_id SMALLINT NOT NULL,
   amount BIGINT NOT NULL,
   result SMALLINT NOT NULL,
   earnings BIGINT NOT NULL,
   odds BIGINT NOT NULL,
+  status SMALLINT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
@@ -89,6 +93,7 @@ CREATE TABLE IF NOT EXISTS guess_type (
   id serial8  NOT NULL,
   name VARCHAR(16) NOT NULL,
   "desc" VARCHAR(1024) NOT NULL,
+  status SMALLINT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
@@ -101,6 +106,7 @@ CREATE TABLE IF NOT EXISTS settle_type (
   id serial8  NOT NULL,
   name VARCHAR(16) NOT NULL,
   "desc" VARCHAR(1024) NOT NULL,
+  status SMALLINT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
@@ -113,9 +119,23 @@ CREATE TABLE IF NOT EXISTS chip_type (
   id serial8  NOT NULL,
   name VARCHAR(16) NOT NULL,
   "desc" VARCHAR(1024) NOT NULL,
+  status SMALLINT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_chip_type_name on chip_type(name);
 CREATE INDEX IF NOT EXISTS idx_chip_type_created on chip_type(created_at);
+
+DROP TABLE IF EXISTS team;
+CREATE TABLE IF NOT EXISTS team (
+  id serial8  NOT NULL,
+  name VARCHAR(16) NOT NULL,
+  info VARCHAR(1024) NOT NULL,
+  status SMALLINT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX IF NOT EXISTS team_name on team(name);
+CREATE INDEX IF NOT EXISTS idx_team_created on chip_type(created_at);

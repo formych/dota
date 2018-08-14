@@ -9,9 +9,9 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// BalanceAdd 增加结算类型
-func BalanceAdd(c *gin.Context) {
-	g := &dao.Balance{}
+// GuessTypeAdd 增加结算类型
+func GuessTypeAdd(c *gin.Context) {
+	g := &dao.GuessType{}
 	err := c.ShouldBind(g)
 	if err != nil {
 		logrus.Errorf("Bind  data failed, err:[%s]", err.Error())
@@ -19,14 +19,14 @@ func BalanceAdd(c *gin.Context) {
 		return
 	}
 	now := time.Now()
-	settleInfo := &dao.Balance{
-		// UID:       uid,
-		Balance:   g.Balance,
-		Gbalance:  g.Gbalance,
+	settleInfo := &dao.GuessType{
+		Name:      g.Name,
+		Desc:      g.Desc,
 		CreatedAt: now,
-		UpdatedAt: now,
+		UpdateAt:  now,
+		Status:    1,
 	}
-	err = dao.BalanceDAO.Add(settleInfo)
+	err = dao.GuessTypeDAO.Add(settleInfo)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"code": http.StatusInternalServerError, "msg": "数据库错误", "data": map[string]string{"error": err.Error()}})
 		return
@@ -66,7 +66,7 @@ func BalanceAdd(c *gin.Context) {
 // 	guessInfo := &dao.GuessInfo{
 // 		ID:           g.ID,
 // 		UID:          g.UID,
-// 		BalanceID: g.BalanceID,
+// 		SettleTypeID: g.SettleTypeID,
 // 		GuessTypeID:  g.GuessTypeID,
 // 		ChipTypeID:   g.ChipTypeID,
 // 		Result:       g.Result,
@@ -101,12 +101,12 @@ func BalanceAdd(c *gin.Context) {
 // 	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "msg": "删除成功", "data": list})
 // }
 
-// SettleList ...
-// func SettleList(c *gin.Context) {
-// 	list, err := dao.BalanceDAO.GetAll()
-// 	if err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"code": http.StatusInternalServerError, "msg": "数据库错误", "data": map[string]string{"error": err.Error()}})
-// 		return
-// 	}
-// 	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "msg": "获取成功", "data": list})
-// }
+// GuessTypeList ...
+func GuessTypeList(c *gin.Context) {
+	list, err := dao.SettleTypeDAO.GetAll()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"code": http.StatusInternalServerError, "msg": "数据库错误", "data": map[string]string{"error": err.Error()}})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK, "msg": "获取成功", "data": list})
+}
